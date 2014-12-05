@@ -31,7 +31,7 @@ twig:
     strict_variables: "%kernel.debug%"
     form:
         resources:
-            - 'BlackhouseappBluehouseappBundle:common:form_theme.html.twig'
+            - 'BluehouseappWebBundle:common:form_theme.html.twig'
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
@@ -57,7 +57,6 @@ doctrine:
         charset:  UTF8
         # if using pdo_sqlite as your database driver, add the path in parameters.yml
         # e.g. database_path: "%kernel.root_dir%/data/data.db3"
-        # path:     "%database_path%"
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
@@ -108,26 +107,25 @@ fm_elfinder:
                 upload_deny: ['all']
                 upload_max_size: 4M
 
-knp_paginator:
-    page_range: 5
-    default_options:
-        page_name: page
-        sort_field_name: sort
-        sort_direction_name: direction
-        distinct: true
-    template:
-        pagination: BlackhouseappBluehouseappBundle:include:pagination.html.twig
 
 knp_time: ~
 
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: Blackhouseapp\Bundle\BluehouseappBundle\Entity\Member
+    user_class: Bluehouseapp\Bundle\CoreBundle\Entity\Member
     from_email:
         address:        %mailer_user%
         sender_name:   蓝房子
 
+fos_rest:
+   format_listener:
+            rules:
+            - { path: '^/', priorities: [ 'json', 'html'], fallback_format: html, prefer_extension: true }
+   view:
+        formats:
+            json: true
+   disable_csrf_role: ROLE_ADMIN
 
 liip_imagine:
     filter_sets:
@@ -238,3 +236,14 @@ vich_uploader:
             upload_destination: member_fs
             delete_on_remove: true
             inject_on_load: true
+
+
+monolog:
+    handlers:
+        main:
+            type:   stream
+            path:   "%kernel.logs_dir%/%kernel.environment%.log"
+            level:  debug
+        console:
+            type:   console
+

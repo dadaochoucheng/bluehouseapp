@@ -1,8 +1,5 @@
-blackhouseapp_bluehouseapp:
-    resource: "@BlackhouseappBluehouseappBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
+bluehouseapp:
+        resource: "@BluehouseappWebBundle/Resources/config/routing/main.yml"
 _imagine:
     resource: .
     type:     imagine

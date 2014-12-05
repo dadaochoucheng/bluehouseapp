@@ -1,5 +1,0 @@
-INDEX VERSION 1.126+D:\android\bluehouse\bluehouseapp\android\.metadata\.plugins\org.eclipse.jdt.core
-1284074322.index
-18351885.index
-2370326998.index
-2485627598.index
