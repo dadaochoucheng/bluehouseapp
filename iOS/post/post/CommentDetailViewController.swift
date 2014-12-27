@@ -64,7 +64,7 @@ class CommentDetailViewController:ViewController{
     
     func refreshView(){
         self.contentInfoLabel.text  = self.comment.content
-        self.createdInfoLabel.text  = self.comment.created
+        //        self.createdInfoLabel.text  = self.comment.created
         self.modifiedInfoLabel.text = self.comment.modified
         self.tableView?.reloadData()
     }

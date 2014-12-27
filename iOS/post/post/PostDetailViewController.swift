@@ -11,73 +11,146 @@ import UIKit
 
 class PostDetailViewController:ViewController,UITableViewDelegate,UITableViewDataSource {
     var refreshControl = UIRefreshControl()
-    var titleLabel:         UILabel!
-    var titleInfoLabel:     UILabel!
-    var contentLabel:       UILabel!
-    var contentInfoLabel:   UILabel!
-    var createdLabel:       UILabel!
-    var createdInfoLabel:   UILabel!
-    var modifiedLabel:      UILabel!
-    var modifiedInfoLabel:  UILabel!
-    var post:               Post!
+    var memberPhoto:            UIImageView!
+    var titleLabel:             UILabel!
+    var contentView:            UITextView!
+    var createdLabel:           UILabel!
+    var modifiedLabel:          UILabel!
+    var lastCommentTimeLabel:   UILabel!
+    var countLabel:             UILabel!
+    var memberNameLabel:        UILabel!
+    var nodeNameLabel:          UILabel!
+    var post:                   Post!
+    var member:                 Member!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "帖子详情"
+        
+        var title               :String?
+        var content             :String?
+        var created             :String?
+        var modified            :String?
+        var lastCommentTime     :String?
+        
+        var nodeName            :String?
+        var memberName          :String?
+        var memberImageUrl      :String?
+        var commentCount        :Int = 0
+        
+        self.navigationItem.title = "详情"
         
         self.initViewStyle()
         
+        self.view.addSubview(memberPhoto)
         self.view.addSubview(titleLabel)
-        self.view.addSubview(contentLabel)
+        self.view.addSubview(contentView)
         self.view.addSubview(createdLabel)
         self.view.addSubview(modifiedLabel)
-        
-        self.view.addSubview(titleInfoLabel)
-        self.view.addSubview(contentInfoLabel)
-        self.view.addSubview(createdInfoLabel)
-        self.view.addSubview(modifiedInfoLabel)
+        self.view.addSubview(lastCommentTimeLabel)
+        self.view.addSubview(memberNameLabel)
+        self.view.addSubview(nodeNameLabel)
+        self.view.addSubview(countLabel)
         
         self.view.addSubview(self.tableView!)
         
         
         
         self.getPostData()
-        
+        self.getCommentData()
+        self.getMemberData()
     }
     
-    func getPostData(){
+    func getCommentData(){
         
-        if post.id == 0 {
-            return
-        }
         var dl=HttpClient()
-        //        var url = "http://192.168.1.102:8000/post/\(post.id)"
-        var url = "\(Constant().URL_POST_DETAIL)\(post.id)"
+        
+        var postComments:NSDictionary = post.links.objectForKey("postComments") as NSDictionary
+        var postCommentsURL:String = postComments.objectForKey("href") as String
+        var url = "\(Constant().URL_BASE_PATH)\(postCommentsURL)"
+        
         dl.downloadFromGetUrl(url, completionHandler: {(data: NSData?, error: NSError?) -> Void in
             if (error != nil){
                 println("error=\(error!.localizedDescription)")
             }else{
                 var dict=NSJSONSerialization.JSONObjectWithData(data!, options:.MutableContainers, error:nil) as? NSDictionary
                 dict=NSJSONSerialization.JSONObjectWithData(data!, options:.MutableContainers, error:nil) as? NSDictionary
-                println("\(dict)")
-                var postData:NSDictionary = dict?.objectForKey("data") as NSDictionary
-                var commentResult:NSDictionary = dict?.objectForKey("comments") as NSDictionary
-                self.dataArray =  commentResult.objectForKey("items") as NSArray
-                self.post = Post(dic: postData)
                 
-                self.refreshView()
+                var commentArrayDic = dict?.objectForKey("_embedded") as NSDictionary
+                self.dataArray = commentArrayDic.objectForKey("items") as NSArray
+                
+                self.tableView?.reloadData()
                 
             }
         })
     }
     
+    func getMemberData(){
+        
+        var dl=HttpClient()
+        
+        var postDetail:NSDictionary = post.links.objectForKey("member") as NSDictionary
+        var postDetailURL:String = postDetail.objectForKey("href") as String
+        var url = "\(Constant().URL_BASE_PATH)\(postDetailURL)"
+        
+        dl.downloadFromGetUrl(url, completionHandler: {(data: NSData?, error: NSError?) -> Void in
+            if (error != nil){
+                println("error=\(error!.localizedDescription)")
+            }else{
+                var dict=NSJSONSerialization.JSONObjectWithData(data!, options:.MutableContainers, error:nil) as? NSDictionary
+                dict=NSJSONSerialization.JSONObjectWithData(data!, options:.MutableContainers, error:nil) as? NSDictionary
+                
+                self.member = Member(dic:dict!)
+                
+            }
+        })
+        
+        
+    }
+    
+    func getPostData(){
+        var dl=HttpClient()
+        
+        var postComments:NSDictionary = post.links.objectForKey("postComments") as NSDictionary
+        var postCommentsURL:String = postComments.objectForKey("href") as String
+        var url = "\(Constant().URL_BASE_PATH)\(postCommentsURL)"
+        
+        dl.downloadFromGetUrl(url, completionHandler: {(data: NSData?, error: NSError?) -> Void in
+            if (error != nil){
+                println("error=\(error!.localizedDescription)")
+            }else{
+                var dict=NSJSONSerialization.JSONObjectWithData(data!, options:.MutableContainers, error:nil) as? NSDictionary
+                dict=NSJSONSerialization.JSONObjectWithData(data!, options:.MutableContainers, error:nil) as? NSDictionary
+                
+                var commentArrayDic = dict?.objectForKey("_embedded") as NSDictionary
+                self.dataArray = commentArrayDic.objectForKey("items") as NSArray
+                
+                self.refreshView()
+                
+            }
+        })
+        
+    }
+    func refreshPost(){
+        self.titleLabel.text = self.post.title
+        self.contentView.text = self.post.content
+        self.memberNameLabel.text = self.post.memberName
+        self.nodeNameLabel.text = self.post.nodeName
+        
+        var count:Int = self.post.commentCount
+        self.countLabel.text = "回复（\(count)）"
+        
+        var lastCommentTimeString:String = self.post.lastCommentTime!
+        self.lastCommentTimeLabel.text = "最后回复：\(lastCommentTimeString)"
+        var createdString:String = self.post.created!
+        self.createdLabel.text = "创建：\(createdString)"
+        var modifiedString:String = self.post.modified!
+        self.modifiedLabel.text = "更改：\(modifiedString)"
+    }
+    
     func refreshView(){
-        self.titleInfoLabel.text = self.post.title
-        self.contentInfoLabel.text = self.post.content
-        self.createdInfoLabel.text = self.post.created
-        self.modifiedInfoLabel.text = self.post.modified
+        self.refreshPost()
         self.tableView?.reloadData()
     }
     
@@ -86,36 +159,60 @@ class PostDetailViewController:ViewController,UITableViewDelegate,UITableViewDat
         var viewSize = self.view.frame.size
         var viewOrgin = self.view.frame.origin
         
-        var labelWidth:CGFloat = 100.0
-        var textFieldWidth:CGFloat = 250.0
-        var btnWidth:CGFloat = 150.0
+        var padding:CGFloat = 10
+        var textFieldWidth:CGFloat = self.view.frame.size.width-padding*2
+        var photoSize:CGFloat = 80
         
-        var left:CGFloat = (viewSize.width)-btnWidth
+        var defaultFont :UIFont = UIFont(name: "Helvetica", size: 10)
+        
+        memberPhoto = UIImageView(frame: CGRect(origin: CGPointMake(padding, 80.0), size: CGSize(width: photoSize, height: photoSize)))
+        var imageUrl:String = post.memberImageUrl!
+        var url = "\(Constant().URL_BASE_PATH)\(imageUrl)"
+        var nsd = NSData(contentsOfURL:NSURL(string:url))
+        
+        var img = UIImage(data: nsd);
+        
+        memberPhoto.image = img
+        
+        memberPhoto.userInteractionEnabled = true
+        var singleTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action:Selector("imageClick:"))
+        memberPhoto.addGestureRecognizer(singleTap)
         
         
-        titleLabel = UILabel(frame:CGRect(origin: CGPointMake((viewSize.width - labelWidth - textFieldWidth)/2, 80.0), size: CGSizeMake(labelWidth,20)))
-        titleLabel.text = "标题:"
-        
-        titleInfoLabel = UILabel(frame:CGRect(origin: CGPointMake((viewSize.width + labelWidth - textFieldWidth)/2, 80.0), size: CGSizeMake(textFieldWidth,20)))
+        titleLabel = UILabel(frame:CGRect(origin: CGPointMake(padding*2+photoSize, 80.0), size: CGSizeMake(textFieldWidth-photoSize-padding,20)))
         
         
-        contentLabel = UILabel(frame:CGRect(origin: CGPointMake((viewSize.width - labelWidth - textFieldWidth)/2, 100.0), size: CGSizeMake(labelWidth,20)))
-        contentLabel.text = "内容:"
         
-        contentInfoLabel = UILabel(frame:CGRect(origin: CGPointMake((viewSize.width + labelWidth - textFieldWidth)/2, 100.0), size: CGSizeMake(textFieldWidth,20)))
+        contentView = UITextView(frame:CGRect(origin: CGPointMake(padding*2+photoSize, 100.0), size: CGSizeMake(textFieldWidth-photoSize-padding,60)))
+        contentView.font = defaultFont
+        contentView.editable = false
         
-        createdLabel = UILabel(frame:CGRect(origin: CGPointMake((viewSize.width - labelWidth - textFieldWidth)/2, 120.0), size: CGSizeMake(labelWidth,20)))
-        createdLabel.text = "创建时间:"
+        memberNameLabel = UILabel(frame:CGRect(origin: CGPointMake(padding, 160.0), size: CGSizeMake(textFieldWidth/6,20)))
+        memberNameLabel.font = defaultFont
         
-        createdInfoLabel = UILabel(frame:CGRect(origin: CGPointMake((viewSize.width + labelWidth - textFieldWidth)/2, 120.0), size: CGSizeMake(textFieldWidth,20)))
+        countLabel = UILabel(frame:CGRect(origin: CGPointMake(padding+textFieldWidth/6, 160.0), size: CGSizeMake(textFieldWidth/6,20)))
+        countLabel.font = defaultFont
         
-        modifiedLabel = UILabel(frame:CGRect(origin: CGPointMake((viewSize.width - labelWidth - textFieldWidth)/2, 140.0), size: CGSizeMake(labelWidth,20)))
-        modifiedLabel.text = "修改时间:"
+        nodeNameLabel = UILabel(frame:CGRect(origin: CGPointMake(padding+textFieldWidth/3, 160.0), size: CGSizeMake(textFieldWidth/6,20)))
+        nodeNameLabel.font = UIFont(name: "Helvetica", size: 12)
         
-        modifiedInfoLabel = UILabel(frame:CGRect(origin: CGPointMake((viewSize.width + labelWidth - textFieldWidth)/2, 140.0), size: CGSizeMake(textFieldWidth,20)))
+        
+        createdLabel = UILabel(frame:CGRect(origin: CGPointMake(padding+textFieldWidth/2, 160.0), size: CGSizeMake(textFieldWidth/2,20)))
+        createdLabel.font = defaultFont
+        
+        
+        
+        lastCommentTimeLabel = UILabel(frame:CGRect(origin: CGPointMake(padding, 180.0), size: CGSizeMake(textFieldWidth/2,20)))
+        lastCommentTimeLabel.font = defaultFont
+        
+        
+        modifiedLabel = UILabel(frame:CGRect(origin: CGPointMake(padding+textFieldWidth/2, 180.0), size: CGSizeMake(textFieldWidth/2,20)))
+        modifiedLabel.font = defaultFont
+        
+        
         
         var frame = self.view.frame
-        self.tableView = UITableView(frame: CGRect(origin: CGPointMake(0, 170.0), size: CGSizeMake(frame.size.width,frame.size.height-170)), style:UITableViewStyle.Plain)
+        self.tableView = UITableView(frame: CGRect(origin: CGPointMake(0, 210.0), size: CGSizeMake(frame.size.width,frame.size.height-210)), style:UITableViewStyle.Plain)
         self.tableView!.delegate = self
         self.tableView!.dataSource = self
         self.tableView!.registerClass(UITableViewCell.self, forCellReuseIdentifier: "MyTestCell")
@@ -123,6 +220,11 @@ class PostDetailViewController:ViewController,UITableViewDelegate,UITableViewDat
         
     }
     
+    @IBAction func imageClick(recognizer: UITapGestureRecognizer) {
+        var memberDetailVC = MemberDetailViewController()
+        memberDetailVC.member = self.member
+        self.navigationController?.pushViewController(memberDetailVC , animated: true)
+    }
     
     // MARK: - UITableViewDataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -136,14 +238,30 @@ class PostDetailViewController:ViewController,UITableViewDelegate,UITableViewDat
         //let obj: New = dataArray[indexPath.row] as New
         let obj:NSDictionary = dataArray[indexPath.row] as NSDictionary
         
-        cell.textLabel?.text = obj.objectForKey("content") as? String
+        var comment = Comment(dic: obj)
+        cell.textLabel?.text = comment.content
         
         
         //        let dateFormatter = NSDateFormatter()
         //        dateFormatter.dateFormat = "yyyy年 MM月 dd日"
         //
         //        let str = dateFormatter.stringFromDate(obj.title)
-        cell.detailTextLabel?.text = obj.objectForKey("created") as? String
+        
+        var membername:String = comment.memberName!
+        var modifiedDate:String = comment.modified!
+        
+        var detailString:String = "\(membername)   回复时间：\(modifiedDate)"
+        
+        cell.detailTextLabel?.text = detailString
+        
+        var imgURL:String = obj.objectForKey("memberimageurl") as String
+        var url = "\(Constant().URL_BASE_PATH)\(imgURL)"
+        var nsd = NSData(contentsOfURL:NSURL(string:url))
+        
+        var img = UIImage(data: nsd);
+        
+        cell.imageView?.image = img
+        
         return cell;
     }
     
@@ -151,9 +269,6 @@ class PostDetailViewController:ViewController,UITableViewDelegate,UITableViewDat
         //        下面是取消点击后的选中
         //        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        var commentDetailVC = CommentDetailViewController()
-        commentDetailVC.comment = Comment(dic: self.dataArray[indexPath.row] as NSDictionary)
-        self.navigationController?.pushViewController(commentDetailVC , animated: true)
     }
     
 }

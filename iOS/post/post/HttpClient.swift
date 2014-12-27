@@ -43,9 +43,9 @@ class HttpClient:NSObject,NSURLConnectionDataDelegate{
         
         //设置HTTPHeader
         //[request setValue:content forHTTPHeaderField:@"Content-Type"];
-        request.addValue("HTTP_USER_AGENT iOS", forHTTPHeaderField:"WH-Context")
-        
-        println(request.allHTTPHeaderFields)
+        //        request.addValue("HTTP_USER_AGENT iOS", forHTTPHeaderField:"WH-Context")
+        //
+        //        println(request.allHTTPHeaderFields)
         
         
         

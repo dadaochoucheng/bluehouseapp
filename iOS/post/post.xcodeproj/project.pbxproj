@@ -13,6 +13,9 @@
 		656A19FC19E57C3100600177 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 656A19FB19E57C3100600177 /* Images.xcassets */; };
 		656A19FF19E57C3100600177 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 656A19FD19E57C3100600177 /* LaunchScreen.xib */; };
 		656A1A0B19E57C3100600177 /* postTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656A1A0A19E57C3100600177 /* postTests.swift */; };
+		658A71F51A4ED3E1008B9E02 /* NodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658A71F41A4ED3E1008B9E02 /* NodeViewController.swift */; };
+		658A71F81A4ED48D008B9E02 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658A71F71A4ED48D008B9E02 /* Member.swift */; };
+		658A71FA1A4ED4AA008B9E02 /* MemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658A71F91A4ED4AA008B9E02 /* MemberViewController.swift */; };
 		65A8500519E57EC200D7DED7 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8500419E57EC200D7DED7 /* Constant.swift */; };
 		65A8500719E57EF600D7DED7 /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8500619E57EF600D7DED7 /* HttpClient.swift */; };
 		65A8500C19E57F9D00D7DED7 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8500B19E57F9D00D7DED7 /* PostViewController.swift */; };
@@ -50,6 +53,9 @@
 		656A1A0419E57C3100600177 /* postTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = postTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		656A1A0919E57C3100600177 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		656A1A0A19E57C3100600177 /* postTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = postTests.swift; sourceTree = "<group>"; };
+		658A71F41A4ED3E1008B9E02 /* NodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeViewController.swift; sourceTree = "<group>"; };
+		658A71F71A4ED48D008B9E02 /* Member.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		658A71F91A4ED4AA008B9E02 /* MemberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberViewController.swift; sourceTree = "<group>"; };
 		65A8500419E57EC200D7DED7 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		65A8500619E57EF600D7DED7 /* HttpClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpClient.swift; sourceTree = "<group>"; };
 		65A8500B19E57F9D00D7DED7 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +149,23 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		658A71F31A4ED3CC008B9E02 /* node */ = {
+			isa = PBXGroup;
+			children = (
+				658A71F41A4ED3E1008B9E02 /* NodeViewController.swift */,
+			);
+			name = node;
+			sourceTree = "<group>";
+		};
+		658A71F61A4ED481008B9E02 /* member */ = {
+			isa = PBXGroup;
+			children = (
+				658A71F71A4ED48D008B9E02 /* Member.swift */,
+				658A71F91A4ED4AA008B9E02 /* MemberViewController.swift */,
+			);
+			name = member;
+			sourceTree = "<group>";
+		};
 		65A8500019E57E2900D7DED7 /* resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -171,6 +194,8 @@
 		65A8500319E57E9500D7DED7 /* project */ = {
 			isa = PBXGroup;
 			children = (
+				658A71F61A4ED481008B9E02 /* member */,
+				658A71F31A4ED3CC008B9E02 /* node */,
 				65A8500819E57F2F00D7DED7 /* post */,
 				65A8500A19E57F6800D7DED7 /* comment */,
 				65A8500919E57F5600D7DED7 /* user */,
@@ -313,6 +338,7 @@
 				65A8501A19E5810A00D7DED7 /* LoginViewController.swift in Sources */,
 				656A19F719E57C3100600177 /* ViewController.swift in Sources */,
 				65A8501019E57FFC00D7DED7 /* PostDetailViewController.swift in Sources */,
+				658A71FA1A4ED4AA008B9E02 /* MemberViewController.swift in Sources */,
 				65A8502219E5819900D7DED7 /* Store.swift in Sources */,
 				656A19F519E57C3100600177 /* AppDelegate.swift in Sources */,
 				65A8501219E5801F00D7DED7 /* Post.swift in Sources */,
@@ -320,8 +346,10 @@
 				65A8500519E57EC200D7DED7 /* Constant.swift in Sources */,
 				65A8501E19E5815A00D7DED7 /* UserViewController.swift in Sources */,
 				65A8502019E5816E00D7DED7 /* User.swift in Sources */,
+				658A71F51A4ED3E1008B9E02 /* NodeViewController.swift in Sources */,
 				65A8500E19E57FC800D7DED7 /* AddPostViewController.swift in Sources */,
 				65A8501C19E5812B00D7DED7 /* RegistViewController.swift in Sources */,
+				658A71F81A4ED48D008B9E02 /* Member.swift in Sources */,
 				65A8500C19E57F9D00D7DED7 /* PostViewController.swift in Sources */,
 				65A8501419E5807E00D7DED7 /* CommentViewController.swift in Sources */,
 				65A8501819E580CD00D7DED7 /* Comment.swift in Sources */,
