@@ -20,7 +20,15 @@ import UIKit
 class MemberDetailViewController:ViewController,UITableViewDelegate,UITableViewDataSource {
     var refreshControl = UIRefreshControl()
     var memberPhoto:            UIImageView!
-    var usernameLabel:             UILabel!
+    var usernameLabel:          UILabel!
+    var nicknameLabel:          UILabel!
+    var cityLabel:              UILabel!
+    var descriptionView:        UITextView!
+    var oschinaLabel:           UILabel!
+    var websiteLabel:            UILabel!
+    var weiboLabel:             UILabel!
+    
+    
     var postLabel:              UILabel!
     var commentLabel:           UILabel!
     
@@ -35,16 +43,7 @@ class MemberDetailViewController:ViewController,UITableViewDelegate,UITableViewD
         super.viewDidLoad()
         
         
-        var title               :String?
-        var content             :String?
-        var created             :String?
-        var modified            :String?
-        var lastCommentTime     :String?
         
-        var nodeName            :String?
-        var memberName          :String?
-        var memberImageUrl      :String!
-        var commentCount        :Int = 0
         
         self.navigationItem.title = "详情"
         
@@ -52,6 +51,13 @@ class MemberDetailViewController:ViewController,UITableViewDelegate,UITableViewD
         
         self.view.addSubview(memberPhoto)
         self.view.addSubview(usernameLabel)
+        self.view.addSubview(nicknameLabel)
+        self.view.addSubview(cityLabel)
+        self.view.addSubview(descriptionView)
+        self.view.addSubview(websiteLabel)
+        self.view.addSubview(weiboLabel)
+        self.view.addSubview(oschinaLabel)
+        
         self.view.addSubview(postLabel)
         self.view.addSubview(commentLabel)
         self.view.addSubview(commentTableView)
@@ -116,6 +122,19 @@ class MemberDetailViewController:ViewController,UITableViewDelegate,UITableViewD
         
         self.usernameLabel.text = self.member.username
         
+        self.nicknameLabel.text = "昵称："+self.member.nickname
+        
+        self.cityLabel.text = "城市：" + self.member.city
+        
+        self.descriptionView.text = "简介：" + self.member.description
+        
+        self.oschinaLabel.text = "开源中国：" + self.member.oschina
+        
+        self.websiteLabel.text = "个人网站：" + self.member.website
+        
+        self.weiboLabel.text = "个人微博：" + self.member.weibo
+        
+        
         var imageUrl:String = self.member.userimageurl!
         var url = "\(Constant().URL_BASE_PATH)\(imageUrl)"
         var nsd = NSData(contentsOfURL:NSURL(string:url))
@@ -141,14 +160,39 @@ class MemberDetailViewController:ViewController,UITableViewDelegate,UITableViewD
         var textFieldWidth:CGFloat = self.view.frame.size.width-padding*2
         var photoSize:CGFloat = 80
         
-        var defaultFont :UIFont = UIFont(name: "Helvetica", size: 20)
+        var defaultFont :UIFont = UIFont(name: "Helvetica", size: 10)
         
         memberPhoto = UIImageView(frame: CGRect(origin: CGPointMake(padding, 80.0), size: CGSize(width: photoSize, height: photoSize)))
         
         
         
-        usernameLabel = UILabel(frame:CGRect(origin: CGPointMake(padding*2+photoSize,80.0), size: CGSizeMake(textFieldWidth-photoSize-padding,photoSize)))
-        usernameLabel.font = defaultFont
+        usernameLabel = UILabel(frame:CGRect(origin: CGPointMake(padding*2+photoSize,80.0), size: CGSizeMake(textFieldWidth-photoSize-padding,20)))
+        usernameLabel.font = UIFont(name: "Helvetica", size: 18)
+        
+        
+        nicknameLabel = UILabel(frame:CGRect(origin: CGPointMake(padding*2+photoSize,100.0), size: CGSizeMake(textFieldWidth/2-photoSize/2-padding/2,10)))
+        nicknameLabel.font = defaultFont
+        
+        cityLabel = UILabel(frame:CGRect(origin: CGPointMake(padding*2+photoSize+textFieldWidth/2-photoSize/2-padding/2,100.0), size: CGSizeMake(textFieldWidth/2-photoSize/2-padding/2,10)))
+        cityLabel.font = defaultFont
+        
+        
+        descriptionView = UITextView(frame:CGRect(origin: CGPointMake(padding*2+photoSize,110.0), size: CGSizeMake(textFieldWidth-photoSize-padding,20)))
+        descriptionView.editable = false
+        descriptionView.font = defaultFont
+        
+        websiteLabel = UILabel(frame:CGRect(origin: CGPointMake(padding*2+photoSize,130.0), size: CGSizeMake(textFieldWidth-photoSize-padding,10)))
+        websiteLabel.font = defaultFont
+        
+        
+        oschinaLabel = UILabel(frame:CGRect(origin: CGPointMake(padding*2+photoSize,140.0), size: CGSizeMake(textFieldWidth-photoSize-padding,10)))
+        oschinaLabel.font = defaultFont
+        
+        weiboLabel = UILabel(frame:CGRect(origin: CGPointMake(padding*2+photoSize,150.0), size: CGSizeMake(textFieldWidth-photoSize-padding,10)))
+        weiboLabel.font = defaultFont
+        
+        
+        
         
         postLabel = UILabel(frame:CGRect(origin: CGPointMake(padding,160), size: CGSizeMake(textFieldWidth,20)))
         postLabel.text = "发表过的帖子："

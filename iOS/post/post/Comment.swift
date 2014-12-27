@@ -10,12 +10,12 @@ import Foundation
 
 class Comment{
     var id                  :Int = 0
-    var postTitle               :String?
-    var content             :String?
-    var modified            :String?
+    var postTitle           :String! = ""
+    var content             :String! = ""
+    var modified            :String! = ""
     
-    var memberName          :String?
-    var memberImageUrl      :String?
+    var memberName          :String! = ""
+    var memberImageUrl      :String! = ""
     
     var links               :NSDictionary!
     
@@ -28,13 +28,23 @@ class Comment{
         
         
         self.id = dic.objectForKey("id") as Int
-        self.postTitle = dic.objectForKey("postTitle") as? String
-        self.content = dic.objectForKey("content") as? String
-        self.modified = dic.objectForKey("modified") as? String
         
-        self.memberImageUrl = dic.objectForKey("memberimageurl") as? String
-        self.memberName =  dic.objectForKey("memberName") as? String
+        if(dic.objectForKey("postTitle") != nil){
+            self.postTitle = dic.objectForKey("postTitle") as? String
+        }
+        if(dic.objectForKey("content") != nil){
+            self.content = dic.objectForKey("content") as? String
+        }
+        if(dic.objectForKey("modified") != nil){
+            self.modified = dic.objectForKey("modified") as? String
+        }
         
+        if(dic.objectForKey("memberimageurl") != nil){
+            self.memberImageUrl = dic.objectForKey("memberimageurl") as? String
+        }
+        if(dic.objectForKey("memberName") != nil){
+            self.memberName =  dic.objectForKey("memberName") as? String
+        }
         self.links = dic.objectForKey("_links") as NSDictionary
         
     }
