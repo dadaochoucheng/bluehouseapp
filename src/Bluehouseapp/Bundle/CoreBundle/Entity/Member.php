@@ -392,4 +392,28 @@ class Member extends BaseUser
     }
 
 
+    private $userimageurl;
+
+    /**
+     * @param mixed $userimageurl
+     */
+    public function setUserimageurl($userimageurl)
+    {
+        $this->userimageurl = $userimageurl;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserimageurl()
+    {
+        return $this->userimageurl;
+    }
+
+
+
+
+
+
+
 }

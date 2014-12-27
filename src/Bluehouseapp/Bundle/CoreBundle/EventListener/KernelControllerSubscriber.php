@@ -18,6 +18,7 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
  */
 class KernelControllerSubscriber implements EventSubscriberInterface
 {
+    const  APPLICATION_NAME= 'bluehouseapp';
     /**
      * @var ParametersParser
      */
@@ -94,8 +95,8 @@ class KernelControllerSubscriber implements EventSubscriberInterface
         $controller->getConfiguration()->setParameters($this->parameters);
 
         $routeParams = $request->attributes->get('_route_params', array());
-        if (isset($routeParams['_bluehouseapp'])) {
-            unset($routeParams['_bluehouseapp']);
+        if (isset($routeParams['_'.KernelControllerSubscriber::APPLICATION_NAME])) {
+            unset($routeParams['_'.KernelControllerSubscriber::APPLICATION_NAME]);
 
             $request->attributes->set('_route_params', $routeParams);
         }
@@ -125,6 +126,6 @@ class KernelControllerSubscriber implements EventSubscriberInterface
             }
         }
 
-        return array_merge($request->attributes->get('_bluehouseapp', array()), $data);
+        return array_merge($request->attributes->get('_'.KernelControllerSubscriber::APPLICATION_NAME, array()), $data);
     }
 }

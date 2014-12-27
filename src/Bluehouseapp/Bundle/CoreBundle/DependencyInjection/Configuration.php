@@ -121,7 +121,7 @@ class Configuration implements ConfigurationInterface
             ->addDefaultsIfNotSet()
             ->children()
             ->scalarNode('model')->defaultValue('Bluehouseapp\Bundle\CoreBundle\Entity\PostComment')->end()
-//            ->scalarNode('controller')->defaultValue('')->end()
+            ->scalarNode('controller')->defaultValue('Bluehouseapp\Bundle\CoreBundle\Controller\PostCommentController')->end()
             ->scalarNode('repository')->defaultValue('Bluehouseapp\Bundle\CoreBundle\Entity\PostCommentRepository')->end()
             ->scalarNode('form')->defaultValue('Bluehouseapp\Bundle\CoreBundle\Form\PostCommentType')->end()
             ->end()

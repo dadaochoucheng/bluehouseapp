@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 
 /**
- * µÇÂ½
+ * ç™»å½•
  *
  */
 public class LoginActivity extends Activity {
@@ -53,10 +53,10 @@ public class LoginActivity extends Activity {
 			public void onClick(View v) {
 
 				   if(et_name.getText().toString().trim().length() < 1){
-					   Toast.makeText(LoginActivity.this,"ÇëÊäÈëÓÃ»§Ãû",Toast.LENGTH_SHORT).show();
+					   Toast.makeText(LoginActivity.this,"è¯·è¾“å…¥ç”¨æˆ·å",Toast.LENGTH_SHORT).show();
 					   return;
 				   }else if(et_password.getText().toString().trim().length() <1){
-					   Toast.makeText(LoginActivity.this,"ÇëÊäÈëÃÜÂë",Toast.LENGTH_SHORT).show();
+					   Toast.makeText(LoginActivity.this,"è¯·è¾“å…¥å¯†ç ",Toast.LENGTH_SHORT).show();
 					   return;
 				   }else{
 					   new LoginTask().execute();

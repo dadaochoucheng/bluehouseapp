@@ -142,7 +142,6 @@ class Post
     private $image;
 
 
-
     /**
      * @ORM\ManyToOne(targetEntity="Node")
      * @ORM\JoinColumn(name="node_id", referencedColumnName="id")
@@ -166,11 +165,9 @@ class Post
     }
 
 
-
-
     public function setImage($image)
     {
-        if($image){
+        if ($image) {
             $this->attachment = $image->getFileName();
         }
         $this->image = $image;
@@ -342,6 +339,7 @@ class Post
     {
         return $this->member;
     }
+
     /**
      * Add comments
      *
@@ -397,7 +395,21 @@ class Post
         return $this->comments;
     }
 
+    public function  getMemberName()
+    {
+        $member = $this->getMember();
+        $name = $member->getNickname() ? $member->getNickname() : $member->getUsername();
+        return $name;
+    }
 
 
+   public  function  getNodeName(){
+       $node=$this->getNode();
+       return $node->getName();
+   }
 
+    public  function  getMemberImageURL(){
+        $member = $this->getMember();
+        return $member->getUserimageurl();
+    }
 }

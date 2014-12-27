@@ -19,7 +19,7 @@ use  Bluehouseapp\Bundle\CoreBundle\Controller\Resource\ResourceController;
 class PostController extends ResourceController
 {
 
-    public function indexAction(Request $request)
+    public function listAction(Request $request)
     {
         return $this->redirect($this->generateUrl('post_by_category', array('currentCategoryId'=>'0')));
     }

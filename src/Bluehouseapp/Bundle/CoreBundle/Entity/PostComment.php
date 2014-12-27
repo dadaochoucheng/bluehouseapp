@@ -292,6 +292,22 @@ class PostComment {
     }
 
 
+    public function  getMemberName()
+    {
+        $member = $this->getMember();
+        $name = $member->getNickname() ? $member->getNickname() : $member->getUsername();
+        return $name;
+    }
 
+    public function  getPostTitle()
+    {
+        $post = $this->getPost();
+        $title = $post->getTitle();
+        return $title;
+    }
+    public  function  getMemberImageURL(){
+        $member = $this->getMember();
+        return $member->getUserimageurl();
+    }
 
 } 

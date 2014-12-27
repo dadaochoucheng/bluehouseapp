@@ -95,11 +95,12 @@ class ResourceController extends FOSRestController
      */
     public function showAction(Request $request)
     {
+        $criteria = $this->config->getCriteria();
         $view = $this
             ->view()
             ->setTemplate($this->config->getTemplate('show.html'))
             ->setTemplateVar($this->config->getResourceName())
-            ->setData($this->findOr404($request))
+            ->setData($this->findOr404($request,$criteria))
         ;
 
         return $this->handleView($view);
@@ -328,12 +329,12 @@ class ResourceController extends FOSRestController
             $default = array();
         }
 
-        $criteria = array_merge($default, $criteria);
+        $criteria= array_merge($default, $criteria);
 
         if (!$resource = $this->resourceResolver->getResource(
             $this->getRepository(),
             'findOneBy',
-            array($this->config->getCriteria($criteria)))
+            array($criteria))
         ) {
             throw new NotFoundHttpException(
                 sprintf(

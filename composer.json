@@ -24,7 +24,7 @@
         "php": ">=5.3.3",
         "symfony/symfony": "2.5.*",
         "doctrine/orm": "~2.2,>=2.2.3",
-        "doctrine/common": "~2.0",	
+        "doctrine/common": "~2.0",
         "doctrine/doctrine-bundle": "~1.2",
         "twig/extensions": "~1.0",
         "symfony/assetic-bundle": "~2.3",
@@ -44,9 +44,8 @@
         "exercise/htmlpurifier-bundle": "dev-master",
         "knplabs/knp-time-bundle": "dev-master",
         "Trsteel/ckeditor-bundle": "~1.4",
-        "jms/serializer": "0.13@dev",
-        "jms/metadata": "~1.1",	
-        "jms/translation-bundle":"1.1.*",
+        "jms/serializer-bundle": "~0.13",
+        "jms/translation-bundle":  "1.1.*",
         "gedmo/doctrine-extensions": "2.3.*@dev",
         "simplepie/simplepie": "dev-master",
         "slackiss/slackend-twigextra-bundle": "2.3.*@dev",
@@ -57,7 +56,9 @@
 	    "willdurand/hateoas": "2.4.*@dev",
         "willdurand/hateoas-bundle": "1.0.*@dev",
         "symfony/expression-language": "~2.4",
-	    "doctrine/annotations" : "~1.0"
+        "doctrine/annotations" : "~1.0",
+        "friendsofsymfony/oauth-server-bundle": "dev-master",
+        "friendsofsymfony/elastica-bundle":     "~3.0.2"
     },
     "scripts": {
         "post-install-cmd": [

@@ -12,7 +12,6 @@
 
         <parameter key="bluehouseapp.controller.configuration_factory.class">Bluehouseapp\Bundle\CoreBundle\Controller\Resource\ConfigurationFactory</parameter>
 
-
         <parameter key="bluehouseapp.controller.parameters_parser.class">Bluehouseapp\Bundle\CoreBundle\Controller\Resource\ParametersParser</parameter>
         <parameter key="bluehouseapp.controller.parameters.class">Bluehouseapp\Bundle\CoreBundle\Controller\Resource\Parameters</parameter>
         <parameter key="bluehouseapp.event_subscriber.load_orm_metadata.class">Bluehouseapp\Bundle\CoreBundle\EventListener\LoadORMMetadataSubscriber</parameter>
@@ -84,6 +83,16 @@
             <argument type="service" id="router" />
 	    <argument type="service" id="event_dispatcher" />
         </service>
+
+        <service id="bluehouseapp.set_image_url.orm.listener" class="Bluehouseapp\Bundle\CoreBundle\Listener\ModelSetImageURLListener">
+            <argument type="service" id="vich_uploader.templating.helper.uploader_helper" />
+            <argument type="service" id="liip_imagine.cache.manager" />
+
+
+            <tag name="doctrine.event_listener" event="postLoad" />
+
+        </service>
+
     </services>
 
 </container>

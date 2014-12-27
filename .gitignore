@@ -15,5 +15,3 @@
 composer.lock
 /iOS/post/post.xcodeproj/project.xcworkspace/xcuserdata/
 /iOS/post/post.xcodeproj/xcuserdata/wangzhenhua.xcuserdatad/
-nohup.out
-.gitignore

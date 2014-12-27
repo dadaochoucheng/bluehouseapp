@@ -3,22 +3,25 @@
 namespace Bluehouseapp\Bundle\CoreBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
+
+use  Bluehouseapp\Bundle\CoreBundle\Form\PostType;
+use  Bluehouseapp\Bundle\CoreBundle\Entity\Post;
 use  Bluehouseapp\Bundle\CoreBundle\Entity\PostComment;
+use  Bluehouseapp\Bundle\CoreBundle\Entity\Audit;
 use  Bluehouseapp\Bundle\CoreBundle\Form\PostCommentType;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use  Bluehouseapp\Bundle\CoreBundle\Controller\Resource\ResourceController;
+use Symfony\Component\HttpFoundation\Response;
 /**
  * PostComment controller.
  *
  */
-class PostCommentController extends Controller
+class PostCommentController extends ResourceController
 {
 
-
+/*
     public function showAction(Request $request, $id)
     {
         $param=array();
@@ -60,5 +63,5 @@ class PostCommentController extends Controller
         }
 
     }
-
+*/
 }

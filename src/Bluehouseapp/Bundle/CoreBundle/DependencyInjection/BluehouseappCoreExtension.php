@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
  */
 class BluehouseappCoreExtension extends Extension
 {
-    protected $applicationName = 'bluehouseapp';
+      const  APPLICATION_NAME= 'bluehouseapp';
     /**
      * {@inheritdoc}
      */
@@ -37,7 +37,7 @@ class BluehouseappCoreExtension extends Extension
             $this->mapClassParameters($classes, $container);
         $this->mapClassFormType($classes, $container);
 
-        $container->setParameter('bluehouseapp.resource.settings', $config['settings']);
+        $container->setParameter( BluehouseappCoreExtension::APPLICATION_NAME.'.resource.settings', $config['settings']);
     }
     protected function process(array $config, ContainerBuilder $container)
     {
@@ -52,7 +52,7 @@ class BluehouseappCoreExtension extends Extension
                 DatabaseDriverFactory::get(
                     'orm',
                     $container,
-                    $this->applicationName,
+                    BluehouseappCoreExtension::APPLICATION_NAME,
                     $model,
                     isset($config['object_manager']) ? $config['object_manager'] : 'default',
                     isset($config['templates'][$model]) ? $config['templates'][$model] : ''
@@ -63,11 +63,11 @@ class BluehouseappCoreExtension extends Extension
 
 
 
-        if ($container->hasParameter('bluehouseapp.config.classes')) {
-            $classes = array_merge($config['classes'] , $container->getParameter('bluehouseapp.config.classes'));
+        if ($container->hasParameter( BluehouseappCoreExtension::APPLICATION_NAME.'.config.classes')) {
+            $classes = array_merge($config['classes'] , $container->getParameter( BluehouseappCoreExtension::APPLICATION_NAME.'.config.classes'));
         }
 
-        $container->setParameter('bluehouseapp.config.classes', $config['classes'] );
+        $container->setParameter( BluehouseappCoreExtension::APPLICATION_NAME.'.config.classes', $config['classes'] );
 
         return array($config, $loader);
 
@@ -80,7 +80,7 @@ class BluehouseappCoreExtension extends Extension
                 $container->setParameter(
                     sprintf(
                         '%s.%s.%s.class',
-                        $this->applicationName,
+                        BluehouseappCoreExtension::APPLICATION_NAME,
                         $service === 'form' ? 'form.type' : $service,
                         $model
                     ),
@@ -98,8 +98,8 @@ class BluehouseappCoreExtension extends Extension
                     $definition = new Definition( $serviceClasses['form']);
                     $definition
                         ->setArguments(array($serviceClasses['model'], array()))
-                        ->addTag('form.type', array('alias' => 'bluehouseapp_'.$model));
-                    $container->setDefinition('bluehouseapp.form.type.'.$model, $definition);
+                        ->addTag('form.type', array('alias' =>  BluehouseappCoreExtension::APPLICATION_NAME.'_'.$model));
+                    $container->setDefinition( BluehouseappCoreExtension::APPLICATION_NAME.'.form.type.'.$model, $definition);
                 }
             }
         }

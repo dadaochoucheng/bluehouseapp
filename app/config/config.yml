@@ -118,43 +118,55 @@ fos_user:
         address:        %mailer_user%
         sender_name:   蓝房子
 
+#fos_rest:
+#   format_listener:
+#            rules:
+#            - { path: '^/', priorities: [ 'json', 'html'], fallback_format: html, prefer_extension: true }
+#   view:
+#        formats:
+#            json: true
+#   disable_csrf_role: ROLE_ADMIN
+
 fos_rest:
-   format_listener:
-            rules:
-            - { path: '^/', priorities: [ 'json', 'html'], fallback_format: html, prefer_extension: true }
-   view:
+    disable_csrf_role: ROLE_API
+    view:
         formats:
             json: true
-   disable_csrf_role: ROLE_ADMIN
+            xml:  true
+        empty_content: 204
+    format_listener:
+        rules:
+             - { path: '^/api', priorities: ['json'], fallback_format: json, prefer_extension: true }
+             - { path: '^/' }
 
 liip_imagine:
     filter_sets:
         face_image:
-            quality: 75
+            quality: 100
             filters:
                 thumbnail: { size: [170, 170], mode: outbound}
         avatar_image:
-            quality: 75
+            quality: 100
             filters:
                 thumbnail: { size: [73, 73], mode: outbound }
         banner_image:
-            quality: 75
+            quality: 100
             filters:
                 thumbnail: { size: [940, 360], mode: outbound }
         small_image:
-            quality: 75
+            quality: 100
             filters:
                 thumbnail: { size: [48, 48], mode: outbound }
         mini_image:
-            quality: 75
+            quality: 100
             filters:
-                thumbnail: { size: [24, 24], mode: outbound }
+                thumbnail: { size: [36, 36], mode: outbound }
         product_image:
-                     quality: 75
+                     quality: 100
                      filters:
                          thumbnail: { size: [480, 480], mode: outbound }
         page_image:
-            quality: 75
+            quality: 100
             filters:
                 relative_resize: { widen: 600 }
 
@@ -247,3 +259,27 @@ monolog:
         console:
             type:   console
 
+fos_oauth_server:
+      db_driver: orm       # Driver availables: orm, mongodb, or propel
+      client_class:  Bluehouseapp\Bundle\CoreBundle\Entity\Client
+      access_token_class: Bluehouseapp\Bundle\CoreBundle\Entity\AccessToken
+      refresh_token_class: Bluehouseapp\Bundle\CoreBundle\Entity\RefreshToken
+      auth_code_class:  Bluehouseapp\Bundle\CoreBundle\Entity\AuthCode
+      service:
+           user_provider: fos_user.user_manager
+
+jms_serializer:
+    metadata:
+        cache: file
+        debug: true
+        #debug: "%kernel.debug%"
+        file_cache:
+            dir: "%kernel.cache_dir%/serializer"
+        auto_detection: true
+        directories:
+            FOSUB:
+                namespace_prefix: "FOS\\UserBundle"
+                path: "%kernel.root_dir%/Resources/FOSUserBundle/serializer"
+            bluehouseapp-post:
+                namespace_prefix: "Bluehouseapp\\Bundle\\CoreBundle"
+                path: "@BluehouseappCoreBundle/Resources/config/serializer"

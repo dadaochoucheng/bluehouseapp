@@ -388,6 +388,27 @@ class Node
     }
 
 
+    private $nodeimageurl;
+
+    /**
+     * @param mixed $nodeimageurl
+     */
+    public function setNodeimageurl($nodeimageurl)
+    {
+        $this->nodeimageurl = $nodeimageurl;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNodeimageurl()
+    {
+        return $this->nodeimageurl;
+    }
+
+
+
+
 
 
 }

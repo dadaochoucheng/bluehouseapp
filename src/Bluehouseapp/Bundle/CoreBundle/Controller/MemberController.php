@@ -213,31 +213,51 @@ class MemberController  extends ResourceController
         if (!$entity) {
             throw new NotFoundHttpException('这个用户不存在');
         }
+        /*
+        if ($this->config->isApiRequest()) {
+            $criteria = $this->config->getCriteria();
+            $member=$this->findOr404($request,$criteria);
+            $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
+            $path = $helper->asset($member, 'userImage');
+
+            $member->setUserImageURL($path);
+            $view = $this
+                ->view()
+                ->setTemplate($this->config->getTemplate('show.html'))
+                ->setTemplateVar($this->config->getResourceName())
+                ->setData($member)
+            ;
+
+            return $this->handleView($view);
+
+        }else{
+        */
+            $posts = $this->get('bluehouseapp.repository.post')->getPostsByMember($entity);
+
+            $lastComments = array();
+            foreach ($posts  as $post){
+                $lastComments[$post->getId()]=$this->get('bluehouseapp.repository.postcomment')->getLastComment($post);
+
+            }
+
+            $postComments = $this->get('bluehouseapp.repository.postcomment')->getPostCommentsByMember($entity);
 
 
-        $posts = $this->get('bluehouseapp.repository.post')->getPostsByMember($entity);
+            $param['member'] = $entity;
+            $param['posts'] = $posts;
+            $param['lastComments'] = $lastComments;
+            $param['postComments'] = $postComments;
+            //  return $param;
 
-        $lastComments = array();
-        foreach ($posts  as $post){
-            $lastComments[$post->getId()]=$this->get('bluehouseapp.repository.postcomment')->getLastComment($post);
+            $view = $this
+                ->view()
+                ->setTemplate($this->config->getTemplate('show.html'))
+                ->setData($param)
+            ;
+            return $this->handleView($view);
+       // }
 
-        }
 
-        $postComments = $this->get('bluehouseapp.repository.postcomment')->getPostCommentsByMember($entity);
-
-
-        $param['member'] = $entity;
-        $param['posts'] = $posts;
-        $param['lastComments'] = $lastComments;
-        $param['postComments'] = $postComments;
-        //  return $param;
-
-        $view = $this
-            ->view()
-            ->setTemplate($this->config->getTemplate('show.html'))
-            ->setData($param)
-        ;
-        return $this->handleView($view);
 
 
     }

@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new Trsteel\CkeditorBundle\TrsteelCkeditorBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new \FOS\RestBundle\FOSRestBundle(),
+            new \FOS\OAuthServerBundle\FOSOAuthServerBundle(),
             new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
             new Vich\UploaderBundle\VichUploaderBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
@@ -30,6 +31,7 @@ class AppKernel extends Kernel
             new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
             new Bluehouseapp\Bundle\CoreBundle\BluehouseappCoreBundle(),
             new Bluehouseapp\Bundle\WebBundle\BluehouseappWebBundle(),
+            new Bluehouseapp\Bundle\ApiBundle\BluehouseappApiBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

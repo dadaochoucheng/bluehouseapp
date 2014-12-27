@@ -15,7 +15,7 @@ import org.json.JSONObject;
 import android.util.Log;
 
 /**
- * 网络处理工具
+ * 缃戠粶璁块棶
  * 
  */
 public class NetUtil {
@@ -43,7 +43,7 @@ public class NetUtil {
 		connection.setRequestProperty("Content-Length",
 				String.valueOf(entity.length));
 		connection.addRequestProperty("WH-Context", "HTTP_USER_AGENT Android");
-		connection.setDoOutput(true); // 允许对外输出数据
+		connection.setDoOutput(true); // 
 		OutputStream outputStream = connection.getOutputStream();
 		outputStream.write(entity);
 		InputStream is = null;
@@ -75,7 +75,7 @@ public class NetUtil {
 		StringBuilder url = new StringBuilder(path);
 		if (params != null && !params.isEmpty()) {
 			for (Map.Entry<String, String> entry : params.entrySet()) {
-				url.append(URLEncoder.encode(entry.getValue(), encoding)); // 编码
+				url.append(URLEncoder.encode(entry.getValue(), encoding)); // 锟斤拷锟斤拷
 				url.append("&");
 			}
 			url.deleteCharAt(url.length() - 1);
