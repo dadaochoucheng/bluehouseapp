@@ -12,7 +12,6 @@ var store:Store!
 
 class Store{
     
-    var user:User = User()
     init(){
     }
     class func getInstance()->Store!{

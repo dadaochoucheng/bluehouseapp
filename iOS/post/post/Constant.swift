@@ -9,10 +9,14 @@
 import Foundation
 
 //let HTTP_PATH:String = "http://192.168.1.101:8000/"
-let HTTP_PATH:String = "http://127.0.0.1:8000/"
+let HTTP_PATH:String = "http://bluehouseapp.com"
 
 class Constant{
-    let URL_POST_LIST:String = "\(HTTP_PATH)post/"
+    let URL_NODE_LIST:String = "\(HTTP_PATH)/api/node"
+    
+    let URL_BASE_PATH:String = "\(HTTP_PATH)"
+    
+    let URL_POST_LIST:String = "\(HTTP_PATH)post"
     let URL_POST_CREATE:String = "\(HTTP_PATH)post/"
     let URL_POST_DETAIL:String = "\(HTTP_PATH)post/"
     
@@ -24,5 +28,11 @@ class Constant{
     let URL_USER_REGIST:String = "\(HTTP_PATH)post/"
     
     init(){
+    }
+    class func getLink(dic: NSDictionary)->String{
+        let link:NSDictionary = dic.objectForKey("_links") as NSDictionary
+        let post:NSDictionary = link.objectForKey("posts") as NSDictionary
+        let url:String = post.objectForKey("href") as String
+        return url
     }
 }
