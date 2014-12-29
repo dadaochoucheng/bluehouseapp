@@ -93,6 +93,11 @@
 
         </service>
 
+        <service id="liip_imagine.filter.loader.bluehouseapp_filter" class="Bluehouseapp\Bundle\CoreBundle\Imagine\Filter\Loader\BlueHouseThumbnailFilterLoader">
+            <tag name="liip_imagine.filter.loader" loader="bluehouseapp_filter" />
+        </service>
+
+
     </services>
 
 </container>

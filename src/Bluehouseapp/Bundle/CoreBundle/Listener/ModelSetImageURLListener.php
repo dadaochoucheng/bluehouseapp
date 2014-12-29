@@ -46,7 +46,7 @@ class ModelSetImageURLListener implements EventSubscriber{
             if($userImage!=null){
                 $path = $this->helper->asset($entity, 'userImage');
                 if($path!=null){
-                    $filter="mini_image";
+                    $filter="app_mini_image";
                  $filterPath=$this->liip_imagine_manager->getBrowserPath($path,$filter,false);
 
 
@@ -69,10 +69,8 @@ class ModelSetImageURLListener implements EventSubscriber{
             if($NodeImage!=null){
                 $path = $this->helper->asset($entity, 'image');
                 if($path!=null){
-                    $filter="avatar_image";
+                    $filter="app_avatar_image";
                     $filterPath=$this->liip_imagine_manager->getBrowserPath($path,$filter,false);
-
-
                     $entity->setNodeimageurl($filterPath);
                 }
 
