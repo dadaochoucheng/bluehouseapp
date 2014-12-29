@@ -169,8 +169,14 @@ liip_imagine:
             quality: 100
             filters:
                 relative_resize: { widen: 600 }
-
-
+        app_mini_image:
+            quality: 100
+            filters:
+                bluehouseapp_filter: { max: [36, 36], mode: outbound }
+        app_avatar_image:
+            quality: 100
+            filters:
+                bluehouseapp_filter: { max: [73, 73], mode: outbound }
 knp_gaufrette:
     stream_wrapper: ~
     adapters:
