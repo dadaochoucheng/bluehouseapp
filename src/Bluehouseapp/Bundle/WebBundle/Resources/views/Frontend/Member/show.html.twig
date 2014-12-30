@@ -23,21 +23,23 @@
                             <div class="box_fr">
 
                             </div>
+
                             <h1 style="margin-bottom: 5px;">
-                                {{ member.username }}
+                                {% if  member.nickname  %}
+                                    {{ member.nickname }}
+                                {% else %}
+                                    {{ member.username }}
+
+                                {% endif %}
                             </h1>
 
-                            <span class="box_bigger">
-                                {% if  member.nickname  %}
-                                {{ member.nickname }}
-                                {% endif %}
-                            </span>
 
                             <div class="box_sep10"></div>
                             <span class="box_gray"><li class="box_fa box_fa-time"></li>
                                 &nbsp; 加入于
 
                                 {{ time_diff(member.created) }}
+                                </span>
                         </td>
                     </tr>
                 </tbody>
