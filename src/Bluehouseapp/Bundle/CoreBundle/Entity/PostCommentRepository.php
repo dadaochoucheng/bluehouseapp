@@ -27,7 +27,7 @@ class PostCommentRepository extends EntityRepository
                 'status' => true, 'enabled' => true,
                 'mLocked'=>false
             ))
-            ->orderBy('pc.id', 'asc');
+            ->orderBy('pc.modified', 'asc');
         return parent::getPaginator($queryBuilder);
 
     }
@@ -86,7 +86,7 @@ class PostCommentRepository extends EntityRepository
                 'status' => true, 'enabled' => true,
                 'mLocked'=>false
             ))
-            ->orderBy('p.modified', 'desc')
+            ->orderBy('pc.modified', 'desc')
             ->setMaxResults(50)
             ->setFirstResult(0)
             ->getQuery();
