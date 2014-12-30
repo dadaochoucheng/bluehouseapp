@@ -17,7 +17,7 @@
             {% endfor %}
 
         </div>
-        <div class="box-cell" style="background-color: #f9f9f9;">
+        <div class="box-inner" style="background-color: #f9f9f9;">
             {% if currentCategory%}
                 {% set nodes=currentCategory.nodes %}
                 {% for node in nodes %}
@@ -25,14 +25,21 @@
                     <a href="{{ path('post_by_node', { 'currentNodeId': node.id }) }}" class="node">{{ node.name }}</a>
                        {% endif %}
                 {% endfor %}
-                {% if currentNode%}
-                    <div class="fr">
-                        <a href="{{ path('post_new', { 'nodeId': currentNode.id }) }}" class="node">创建新主题</a>
-                    </div>
-                {% endif%}
+                {#{% if currentNode%}#}
+                    {#<div class="fr">#}
+                        {#<a href="{{ path('post_new', { 'nodeId': currentNode.id }) }}" class="node">创建新主题</a>#}
+                    {#</div>#}
+                {#{% endif%}#}
             {% endif%}
         </div>
-
+    {% if currentNode%}
+    <div class="box-cell" style="background-color: #f9f9f9;">
+        <div class="fr">
+            <a href="{{ path('post_new', { 'nodeId': currentNode.id }) }}" class="super normal button">创建新主题</a>
+        </div>
+        <div class="c"></div>
+    </div>
+    {% endif%}
 
         {% for entity in entities %}
             <div class="box-cell box-item" style="border-top-left-radius: 3px; border-top-right-radius: 3px;">
