@@ -125,8 +125,9 @@
                                     {% endif %}
                                 </a></strong> &nbsp;•&nbsp;
                             {{ time_diff(post.created) }}
-                           &nbsp;•&nbsp;
+
         {% if lastComments[post.id] %}
+            &nbsp;•&nbsp;
             {% set lastCommentMember= lastComments[post.id].member %}
                             最后回复来自 <strong>
             <a  href="{{ path('user_show', { 'username': lastCommentMember.username }) }}">
@@ -150,7 +151,8 @@
         </div>
         {% endfor %}
 
-        <div class="box_inner"><span class="box_chevron">»</span> <a href="#">
+        <div class="box_inner"><span class="box_chevron">»</span>
+            <a href="{{ path('user_show_topics', { 'username': member.username }) }}">
                 {% if member.nickname %}
                     {{ member.nickname }}
                 {% else %}
@@ -205,7 +207,8 @@
     {% endfor %}
 
 
-        <div class="box_inner"><span class="box_chevron">»</span> <a href="#">
+        <div class="box_inner"><span class="box_chevron">»</span>
+            <a href="{{ path('user_show_replies', { 'username': member.username }) }}">
                 {% if  member.nickname  %}
                     {{ member.nickname }}
                 {% else %}

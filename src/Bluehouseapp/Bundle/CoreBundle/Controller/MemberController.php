@@ -208,42 +208,29 @@ class MemberController  extends ResourceController
     public function showMemberAction(Request $request, $username)
     {
         $param=array();
-        $entity=$this->getRepository()->findOneBy(array('username'=>$username,'locked'=>false));
+        $member=$this->getRepository()->findOneBy(array('username'=>$username,'locked'=>false));
 
-        if (!$entity) {
+        if (!$member) {
             throw new NotFoundHttpException('这个用户不存在');
         }
-        /*
-        if ($this->config->isApiRequest()) {
-            $criteria = $this->config->getCriteria();
-            $member=$this->findOr404($request,$criteria);
-            $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
-            $path = $helper->asset($member, 'userImage');
 
-            $member->setUserImageURL($path);
-            $view = $this
-                ->view()
-                ->setTemplate($this->config->getTemplate('show.html'))
-                ->setTemplateVar($this->config->getResourceName())
-                ->setData($member)
-            ;
+        $posts=$this->getPaginationTopics($member);
+        $posts->setCurrentPage($request->get('page', 1), true, true);
+        $posts->setMaxPerPage($this->config->getPaginationMaxPerPage());
 
-            return $this->handleView($view);
 
-        }else{
-        */
-            $posts = $this->get('bluehouseapp.repository.post')->getPostsByMember($entity);
-
-            $lastComments = array();
+        $lastComments = array();
             foreach ($posts  as $post){
                 $lastComments[$post->getId()]=$this->get('bluehouseapp.repository.postcomment')->getLastComment($post);
 
             }
 
-            $postComments = $this->get('bluehouseapp.repository.postcomment')->getPostCommentsByMember($entity);
+        $postComments=$this->getPaginationReplies($member);
 
+        $postComments->setCurrentPage($request->get('page', 1), true, true);
+        $postComments->setMaxPerPage($this->config->getPaginationMaxPerPage());
 
-            $param['member'] = $entity;
+        $param['member'] = $member;
             $param['posts'] = $posts;
             $param['lastComments'] = $lastComments;
             $param['postComments'] = $postComments;
@@ -258,8 +245,78 @@ class MemberController  extends ResourceController
        // }
 
 
-
-
     }
 
+    public function showMemberTopicsAction(Request $request, $username)
+    {
+        $param=array();
+        $member=$this->getRepository()->findOneBy(array('username'=>$username,'locked'=>false));
+
+        if (!$member) {
+            throw new NotFoundHttpException('这个用户不存在');
+        }
+        $posts=$this->getPaginationTopics($member);
+        $posts->setCurrentPage($request->get('page', 1), true, true);
+        $posts->setMaxPerPage($this->config->getPaginationMaxPerPage());
+
+
+        $lastComments = array();
+        foreach ($posts  as $post){
+            $lastComments[$post->getId()]=$this->get('bluehouseapp.repository.postcomment')->getLastComment($post);
+
+        }
+        $param['member'] = $member;
+        $param['posts'] = $posts;
+        $param['lastComments'] = $lastComments;
+        $view = $this
+            ->view()
+            ->setTemplate($this->config->getTemplate('showTopics.html'))
+            ->setData($param)
+        ;
+        return $this->handleView($view);
+    }
+
+    public function showMemberRepliesAction(Request $request, $username)
+    {
+        $param=array();
+        $member=$this->getRepository()->findOneBy(array('username'=>$username,'locked'=>false));
+
+        if (!$member) {
+            throw new NotFoundHttpException('这个用户不存在');
+        }
+
+        $postComments=$this->getPaginationReplies($member);
+
+        $postComments->setCurrentPage($request->get('page', 1), true, true);
+        $postComments->setMaxPerPage($this->config->getPaginationMaxPerPage());
+
+        $param['member'] = $member;
+        $param['postComments'] = $postComments;
+        $view = $this
+            ->view()
+            ->setTemplate($this->config->getTemplate('showReplies.html'))
+            ->setData($param)
+        ;
+        return $this->handleView($view);
+
+    }
+    public  function  getPaginationTopics( $member){
+        $repository = $this->get('bluehouseapp.repository.post');
+        $resources = $this->resourceResolver->getResource(
+            $repository,
+            'getPostsByMember',
+            array($member)
+        );
+        return $resources;
+    }
+    public  function  getPaginationReplies( $member){
+        $repository = $this->get('bluehouseapp.repository.postcomment');
+
+        $postComments = $this->resourceResolver->getResource(
+            $repository,
+            'getPostCommentsByMember',
+            array($member)
+        );
+    return $postComments;
+    }
 } 

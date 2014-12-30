@@ -65,3 +65,17 @@ user_show:
            _controller: bluehouseapp.controller.member:showMemberAction
            _bluehouseapp:
              template:  BluehouseappWebBundle:Frontend/Member:show.html.twig
+user_show_topics:
+        path:    /user/{username}/topics
+        defaults:
+           _controller: bluehouseapp.controller.member:showMemberTopicsAction
+           _bluehouseapp:
+             template:  BluehouseappWebBundle:Frontend/Member:showTopics.html.twig
+user_show_replies:
+        path:    /user/{username}/replies
+        defaults:
+           _controller: bluehouseapp.controller.member:showMemberRepliesAction
+           _bluehouseapp:
+             template:  BluehouseappWebBundle:Frontend/Member:showReplies.html.twig
+
+
