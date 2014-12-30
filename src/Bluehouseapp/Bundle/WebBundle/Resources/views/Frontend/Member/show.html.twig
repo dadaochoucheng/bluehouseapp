@@ -180,10 +180,10 @@
                             </span></div>
                         <span class="box_gray">回复了
 
-                            {% if postComment.member.nickname %}
-                                {{ postComment.member.nickname }}
+                            {% if postComment.post.member.nickname %}
+                                {{ postComment.post.member.nickname }}
                             {% else %}
-                                {{ postComment.member.username }}
+                                {{ postComment.post.member.username }}
                             {% endif %}
                             创建的主题 <span class="box_chevron">›</span>
                             <a href="{{path('post_show', { 'id': postComment.post.id }) }}">{{ postComment.post.title }}</a></span></td>
