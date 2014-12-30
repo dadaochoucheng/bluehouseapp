@@ -10,7 +10,7 @@
             <a href="{{ path('user_show', { 'username': entity.member.username }) }}">
                 {% if entity.member.avatar %}
 
-                    <img  class="box_avatar" border="0"  align="default" src="{{vich_uploader_asset(entity.member,'userImage')|imagine_filter('small_image')}}"/>
+                    <img  class="box_avatar" border="0"  align="default" src="{{vich_uploader_asset(entity.member,'userImage')|imagine_filter('avatar_image')}}"/>
                 {% else %}
                     <img src="{{ asset('bundles/bluehouseappweb/images/user_default.png') }}"/>
 
