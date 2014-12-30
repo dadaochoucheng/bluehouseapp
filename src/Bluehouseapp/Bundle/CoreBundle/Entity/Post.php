@@ -412,4 +412,11 @@ class Post
         $member = $this->getMember();
         return $member->getUserimageurl();
     }
+
+    public  function  lastCommentTimeKNPTime(){
+
+        return $this->lastCommentTime?diff( $this->lastCommentTime):null;
+    }
+
+
 }

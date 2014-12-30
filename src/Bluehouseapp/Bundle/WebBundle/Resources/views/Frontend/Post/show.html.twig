@@ -34,7 +34,9 @@
                     {{ entity.member.username }}
                 {% endif %}
             </a>
-            · {{ entity.modified|date("Y-m-d H:i") }}</small>
+            ·
+            {{ time_diff(entity.modified) }}
+          </small>
     </div>
     <div class="box_cell">
 
@@ -106,7 +108,9 @@
                                     {% endif %}
 
                                 </a></strong>&nbsp; &nbsp;<span
-                                    class="box_fade box_small"> {{ comment.modified|date("Y-m-d H:i") }}</span>
+                                    class="box_fade box_small">
+                                    {{ time_diff(comment.modified) }}
+                                </span>
 
                             <div class="sep5"></div>
                             <div class="reply_content">
