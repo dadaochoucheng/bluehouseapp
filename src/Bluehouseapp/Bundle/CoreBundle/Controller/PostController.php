@@ -101,7 +101,7 @@ class PostController extends ResourceController
 
         $node= $this->get('bluehouseapp.repository.node')->getNode($currentNodeId);
 
-        $postCounts= $this->get('bluehouseapp.repository.post')->countPostsByNode($node);
+       // $postCounts= $this->get('bluehouseapp.repository.post')->countPostsByNode($node);
 
 
         $view = $this
@@ -113,7 +113,7 @@ class PostController extends ResourceController
                 'lastComments' => $lastComments,
                 'currentCategory' => $currentCategory,
                 'currentNode' => $currentNode,
-                'postCounts'=>$postCounts
+               // 'postCounts'=>$postCounts
             ))
         ;
         return $this->handleView($view);

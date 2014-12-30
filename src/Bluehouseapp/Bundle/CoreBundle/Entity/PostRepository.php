@@ -12,7 +12,7 @@ use Bluehouseapp\Bundle\CoreBundle\Doctrine\ORM\EntityRepository;
  */
 class PostRepository extends EntityRepository
 {
-
+/**
     public function countPostsByNode($node)
     {
 
@@ -32,7 +32,7 @@ class PostRepository extends EntityRepository
 
         return $count;
     }
-
+*/
     public function  getPost($postId)
     {
         $post = null;
