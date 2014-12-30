@@ -13,7 +13,8 @@ use Bluehouseapp\Bundle\CoreBundle\Doctrine\ORM\EntityRepository;
 class PostRepository extends EntityRepository
 {
 
-    public function countPostsByNode($node){
+    public function countPostsByNode($node)
+    {
 
 
         $qb = parent::getQueryBuilder()
@@ -23,18 +24,20 @@ class PostRepository extends EntityRepository
             ->andWhere('p.status = :postStatus')
             ->andWhere('p.enabled = :postEnabled')
             ->andWhere('m.locked = :mLocked')
-            ->setParameters(array('node'=>$node,'postStatus' => true,
+            ->setParameters(array('node' => $node, 'postStatus' => true,
                 'postEnabled' => true,
-                'mLocked'=>false
+                'mLocked' => false
             ));
         $count = $qb->getQuery()->getSingleScalarResult();
 
         return $count;
     }
-    public function  getPost($postId){
+
+    public function  getPost($postId)
+    {
         $post = null;
 
-        $query =  parent::getQueryBuilder()
+        $query = parent::getQueryBuilder()
             ->innerJoin('p.member', 'm')
             ->innerJoin('p.node', 'n')
             ->innerJoin('n.category', 'c')
@@ -47,8 +50,8 @@ class PostRepository extends EntityRepository
             ->andWhere('c.enabled = :enabled')
             ->andWhere('m.locked = :mLocked')
             ->setParameters(array(':id' => $postId,
-                'status' => true,'enabled' => true,
-                'mLocked'=>false
+                'status' => true, 'enabled' => true,
+                'mLocked' => false
             ))
             ->getQuery();
 
@@ -62,7 +65,8 @@ class PostRepository extends EntityRepository
 
     }
 
-    public function  getPostByNode($currentNodeId){
+    public function  getPostByNode($currentNodeId)
+    {
         $queryBuilder = parent::getQueryBuilder()
             ->innerJoin('p.node', 'n')
             ->innerJoin('p.member', 'm')
@@ -76,13 +80,15 @@ class PostRepository extends EntityRepository
             ->andWhere('c.status = :status')
             ->andWhere('c.enabled = :enabled')
             ->andWhere('m.locked = :mLocked')
-            ->setParameters(array('currentNodeId' =>$currentNodeId,
-                'status' => true,'enabled' => true,
-                'mLocked'=>false
+            ->setParameters(array('currentNodeId' => $currentNodeId,
+                'status' => true, 'enabled' => true,
+                'mLocked' => false
             ));
         return parent::getPaginator($queryBuilder);
     }
-    public function  getPostByCategory($currentCategory){
+
+    public function  getPostByCategory($currentCategory)
+    {
 
         $queryBuilder = parent::getQueryBuilder()
             ->innerJoin('p.node', 'n')
@@ -97,19 +103,20 @@ class PostRepository extends EntityRepository
             ->andWhere('c.status = :status')
             ->andWhere('c.enabled = :enabled')
             ->andWhere('m.locked = :mLocked')
-            ->setParameters(array( 'categoryId' => ($currentCategory==null?0:$currentCategory->getId()),
-                'status'=>true,'enabled'=>true,
-                'mLocked'=>false
+            ->setParameters(array('categoryId' => ($currentCategory == null ? 0 : $currentCategory->getId()),
+                'status' => true, 'enabled' => true,
+                'mLocked' => false
             ));
 
 
         return parent::getPaginator($queryBuilder);
     }
 
-    public function  getPostsByMember($member){
+    public function  getPostsByMember($member)
+    {
         $posts = null;
 
-        $query =  parent::getQueryBuilder()
+        $queryBuilder = parent::getQueryBuilder()
             ->innerJoin('p.member', 'm')
             ->innerJoin('p.node', 'n')
             ->innerJoin('n.category', 'c')
@@ -121,25 +128,17 @@ class PostRepository extends EntityRepository
             ->andWhere('n.enabled = :enabled')
             ->andWhere('c.status = :status')
             ->andWhere('c.enabled = :enabled')
-            ->setParameters(array(':member' => $member,
+            ->setParameters(array('member' => $member,
                 'mLocked' => false,
-                'status' => true,'enabled' => true,
-                'mLocked'=>false
+                'status' => true, 'enabled' => true,
+                'mLocked' => false
             ))
-            ->orderBy('p.modified', 'desc')
-            ->setMaxResults(50)
-            ->setFirstResult(0)
-            ->getQuery();
+            ->orderBy('p.modified', 'desc');
 
-        try {
-            $posts = $query->getResult();
-        } catch (\Doctrine\Orm\NoResultException $e) {
-            $posts = null;
-        }
-
-        return $posts;
+        return $this->getPaginator($queryBuilder);
 
     }
+
     protected function getAlias()
     {
         return 'p';
