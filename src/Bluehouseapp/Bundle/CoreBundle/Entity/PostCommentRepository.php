@@ -65,9 +65,8 @@ class PostCommentRepository extends EntityRepository
 
 
     public function  getPostCommentsByMember($member){
-        $postComments = null;
-       // $postRepo = $this->em->getRepository('BlackhouseappBluehouseappBundle:PostComment');
-        $query = parent::getQueryBuilder()
+
+        $queryBuilder = parent::getQueryBuilder()
             ->innerJoin('pc.member', 'm')
             ->innerJoin('pc.post', 'p')
             ->innerJoin('p.node', 'n')
@@ -86,18 +85,8 @@ class PostCommentRepository extends EntityRepository
                 'status' => true, 'enabled' => true,
                 'mLocked'=>false
             ))
-            ->orderBy('pc.modified', 'desc')
-            ->setMaxResults(50)
-            ->setFirstResult(0)
-            ->getQuery();
-
-        try {
-            $postComments = $query->getResult();
-        } catch (\Doctrine\Orm\NoResultException $e) {
-            $postComments = null;
-        }
-
-        return $postComments;
+            ->orderBy('pc.modified', 'desc');
+        return parent::getPaginator($queryBuilder);
 
     }
     protected function getAlias()
