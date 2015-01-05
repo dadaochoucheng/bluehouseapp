@@ -1,0 +1,22 @@
+服务端部分：
+
+ composer update
+  php app/console doctrine:schema:create
+  php app/consoe doctrine:schema:update
+  php app/consoe server:run ip:port
+  php app/console bluehouseapp:oauth-server:client:create --redirect-uri="http://127.0.0.1:8003/" --grant-type="authorization_code" --grant-type="password" --grant-type="refresh_token" --grant-type="token" --grant-type="client_credentials"
+
+ redirect-uri 为客户端工程的ip和端口，将控制台输出的内容保存，配置到客户端工程的config.yml文件中的client_id和client_secret部分，具体看下面部分
+客户端部分：
+
+
+编辑config.yml文件最下方的hwi_oauth部分，只需要替换ip和端口其他部分不变
+client_id: 5_3h50vwsgde4gok04448gcgs88gokw8g0o0wwook0so88w8gwkc
+
+ client_secret: 1v2h1b7qa8kk4k0ks4k8woko0ss4w0ww0o4kg4s0844cc4wsww
+
+ access_token_url: http://127.0.0.1:8002/oauth/v2/token
+
+ authorization_url: http://127.0.0.1:8002/oauth/v2/auth
+
+ infos_url: http://127.0.0.1:8002/oauth_api/user
