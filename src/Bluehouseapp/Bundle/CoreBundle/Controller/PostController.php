@@ -197,12 +197,17 @@ class PostController extends ResourceController
 
             $this->domainManager->create($entity);
 
-
+            $ip = $request->getClientIp(false);
             $audit = new Audit();
             $audit->setEntityId($entity->getId());
-            $audit->setName($entity->getTitle().'|'.'by user:'.$current->getUsername().'('.$current->getNickname().')');
+            $audit->setName($entity->getTitle().'|'.'by user:'.$current->getUsername().'('.$current->getNickname().')'
+                .'|'.'ip:'.$ip
+            );
             $audit->setContent($entity->getContent());
             $audit->setType('post');
+
+
+
             $em->persist($audit);
             $em->flush();
 
@@ -313,11 +318,16 @@ class PostController extends ResourceController
             $em->persist($post);
             $em->flush();
 
+            $ip = $request->getClientIp(false);
             $audit = new Audit();
             $audit->setEntityId($comment->getId());
-            $audit->setName('by user:'.$current->getUsername().'('.$current->getNickname().')');
+            $audit->setName('by user:'.$current->getUsername().'('.$current->getNickname().')'
+                .'|'.'ip:'.$ip
+            );
             $audit->setContent($comment->getContent());
             $audit->setType('post_comment');
+a
+
             $em->persist($audit);
             $em->flush();
             return $this->redirect($this->generateUrl('post_show', array('id' => $post->getId())));
