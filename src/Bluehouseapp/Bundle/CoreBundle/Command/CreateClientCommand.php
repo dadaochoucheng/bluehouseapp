@@ -13,7 +13,7 @@ class CreateClientCommand extends ContainerAwareCommand
     protected function configure()
     {
                 $this
-                    ->setName('acme:oauth-server:client:create')
+                    ->setName('bluehouseapp:oauth-server:client:create')
                     ->setDescription('Creates a new client')
                     ->addOption(
                         'redirect-uri',

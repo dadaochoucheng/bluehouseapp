@@ -41,10 +41,14 @@ fos_oauth_server_token:
 fos_oauth_server_authorize:
       resource: "@FOSOAuthServerBundle/Resources/config/routing/authorize.xml"
 
-acme_oauth_server_auth_login:
+bluehouseapp_oauth_server_auth_login:
      pattern:  /oauth/v2/auth_login
-     defaults: { _controller: BluehouseappBundle:Security:login }
+     defaults: { _controller: BluehouseappCoreBundle:Security:login }
 
-acme_oauth_server_auth_login_check:
+bluehouseapp_oauth_server_auth_login_check:
      pattern:  /oauth/v2/auth_login_check
-     defaults: { _controller: BluehouseappBundle:Security:loginCheck }
+     defaults: { _controller: BluehouseappCoreBundle:Security:loginCheck }
+
+bluehouseapp_oauth_server_api_user:
+     pattern:  /oauth_api/user
+     defaults: { _controller: BluehouseappCoreBundle:Security:user }

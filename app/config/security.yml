@@ -20,23 +20,26 @@ security:
               pattern:    ^/oauth/v2/auth
               form_login:
                      provider: fos_userbundle
-                     check_path: /oauth/v2/auth_login_check
-                     login_path: /oauth/v2/auth_login
+                     check_path: bluehouseapp_oauth_server_auth_login_check
+                     login_path: bluehouseapp_oauth_server_auth_login
               anonymous:  true
         api:
-              pattern:    ^/api
+              pattern:    ^/oauth_api
               fos_oauth:  true
               stateless:  true
-              anonymous:  true
+             # anonymous:  true
+        oauth_token:
+              pattern:    ^/oauth/v2/token
+              security:   false
         main:
             pattern: ^/
             form_login:
                 provider: fos_userbundle
+                login_path: /login
+                check_path: /login_check
                 csrf_provider: form.csrf_provider
                 default_target_path: /web/post
                 always_use_default_target_path: true
-                login_path: /login
-                check_path: /login_check
                 failure_path: /login
                 use_forward:  false
                 use_referer: true
@@ -57,6 +60,6 @@ security:
         - { path: ^/web/admin,                       role: ROLE_ADMIN }
         - { path: ^/web/member,                      role: ROLE_USER }
         - { path: ^/,                            role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/oauth/v2/auth_login,         roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/oauth/v2/auth,               roles: ROLE_USER }
+        - { path: ^/oauth/v2/,         role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/oauth_api,               roles: IS_AUTHENTICATED_FULLY  }
 
