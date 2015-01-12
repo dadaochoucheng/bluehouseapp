@@ -6,9 +6,7 @@
 修改个人资料
 {% endif %}
 
-{% if app.request.get('_route') == 'member_profile_password' or
-      app.request.get('_route') == 'member_profile_change_password'
- %}
+{% if app.request.get('_route') == 'fos_user_change_password' %}
 修改密码
 {% endif %}
 

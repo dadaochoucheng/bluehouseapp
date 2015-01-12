@@ -326,7 +326,6 @@ class PostController extends ResourceController
             );
             $audit->setContent($comment->getContent());
             $audit->setType('post_comment');
-a
 
             $em->persist($audit);
             $em->flush();
